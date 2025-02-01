@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _GunGameBattle.Source.Player.Input
+namespace _GunGameBattle.Source.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
