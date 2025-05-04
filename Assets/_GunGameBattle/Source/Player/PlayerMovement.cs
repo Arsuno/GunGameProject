@@ -4,9 +4,9 @@ namespace _GunGameBattle.Source.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private PlayerInputControls _playerInputControls;
-          
         [SerializeField] private float movementSpeed;
+        
+        private PlayerInputControls _playerInputControls;
 
         private void Awake()
         {
