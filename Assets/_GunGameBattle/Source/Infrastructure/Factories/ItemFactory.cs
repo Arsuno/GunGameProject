@@ -6,18 +6,16 @@ namespace _GunGameBattle.Source.Infrastructure.Factories
 {
     public class ItemFactory
     {
-        private Item _itemPrefab;
-        
-        public ItemFactory(Item itemPrefab)
-        {
-            _itemPrefab = itemPrefab;
-        }
-        
         public GameObject CreateAndInitialize(ItemConfig config)
         {
-            var item = Object.Instantiate(_itemPrefab);
-            item.Initialize(config);
-
+            var item = Object.Instantiate(config.itemPrefab);
+            
+            var spriteRenderer = item.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.white;
+            spriteRenderer.sprite = config.Sprite;
+            
+            item.GetComponent<Item>().Initialize(config);
+            
             return item.gameObject;
         }
     }

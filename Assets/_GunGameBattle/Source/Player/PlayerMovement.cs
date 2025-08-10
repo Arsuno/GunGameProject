@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace _GunGameBattle.Source.Player
 {
@@ -7,23 +8,26 @@ namespace _GunGameBattle.Source.Player
         [SerializeField] private float movementSpeed;
         
         private PlayerInputControls _playerInputControls;
+        private bool _initialized;
 
-        private void Awake()
+        [Inject]
+        public void Initialize(PlayerInputControls playerInputControls)
         {
-            _playerInputControls = new PlayerInputControls();
-            _playerInputControls.Enable();
+            _playerInputControls = playerInputControls;
+
+            _initialized = true;
         }
 
         private void Update()
         {
+            if (!_initialized) 
+                return;
+            
             var direction = _playerInputControls.GamePlay.Move.ReadValue<Vector2>();
             Move(direction);
         }
 
-        private void Move(Vector2 direction)
-        {
+        private void Move(Vector2 direction) => 
             gameObject.transform.transform.Translate(direction * (movementSpeed * Time.deltaTime));
-        }
-        
     }
 }

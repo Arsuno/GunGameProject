@@ -19,7 +19,7 @@ namespace _GunGameBattle.Source.Player.PickUp
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && _playerInventory.HasEmptySlot())
                 TryPickup();
         }
 
@@ -32,6 +32,7 @@ namespace _GunGameBattle.Source.Player.PickUp
                 if (nearestItem == null)
                     return;
 
+                Debug.Log("Item picked up");
                 var item = nearestItem.PickUp();
                 _playerInventory.TryAddItem(item);
             }

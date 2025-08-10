@@ -28,6 +28,7 @@ namespace _GunGameBattle.Source.Player.Inventory
 
         private void OnItemAdded(Item item)
         {
+            Debug.Log("VIEW - OnItemAdded");
             var slot = CheckForEmptySlots(item);
             
             slot.AssignItem(item);

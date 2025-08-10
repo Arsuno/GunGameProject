@@ -35,6 +35,51 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""EquipFirstWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""de23ed9a-4bac-4209-8da0-ce7e8a4e7b40"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipSecondWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""72b2ca71-0485-458b-8f14-10238768b347"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipThirdWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""48951ffb-e517-4752-ac81-d92a80618d8a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""571e0282-b586-4708-937e-b46a39704420"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""15e8a719-fc5a-450b-9d2e-5242dbd26bb4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +137,61 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14420ee5-14a2-40a6-886e-f1c922df2d96"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""EquipFirstWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95540abf-232b-435e-90df-dad1167cfe5a"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""EquipSecondWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea1bda59-3f4e-4919-bb67-563c17cb730a"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""EquipThirdWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc0a3495-8484-49f0-91af-a951f444b02f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e2d66f1-42c1-4466-981e-604b387238aa"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -118,6 +218,11 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
         // GamePlay
         m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
         m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
+        m_GamePlay_EquipFirstWeapon = m_GamePlay.FindAction("EquipFirstWeapon", throwIfNotFound: true);
+        m_GamePlay_EquipSecondWeapon = m_GamePlay.FindAction("EquipSecondWeapon", throwIfNotFound: true);
+        m_GamePlay_EquipThirdWeapon = m_GamePlay.FindAction("EquipThirdWeapon", throwIfNotFound: true);
+        m_GamePlay_Shoot = m_GamePlay.FindAction("Shoot", throwIfNotFound: true);
+        m_GamePlay_Reload = m_GamePlay.FindAction("Reload", throwIfNotFound: true);
     }
 
     ~@PlayerInputControls()
@@ -185,11 +290,21 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GamePlay;
     private List<IGamePlayActions> m_GamePlayActionsCallbackInterfaces = new List<IGamePlayActions>();
     private readonly InputAction m_GamePlay_Move;
+    private readonly InputAction m_GamePlay_EquipFirstWeapon;
+    private readonly InputAction m_GamePlay_EquipSecondWeapon;
+    private readonly InputAction m_GamePlay_EquipThirdWeapon;
+    private readonly InputAction m_GamePlay_Shoot;
+    private readonly InputAction m_GamePlay_Reload;
     public struct GamePlayActions
     {
         private @PlayerInputControls m_Wrapper;
         public GamePlayActions(@PlayerInputControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_GamePlay_Move;
+        public InputAction @EquipFirstWeapon => m_Wrapper.m_GamePlay_EquipFirstWeapon;
+        public InputAction @EquipSecondWeapon => m_Wrapper.m_GamePlay_EquipSecondWeapon;
+        public InputAction @EquipThirdWeapon => m_Wrapper.m_GamePlay_EquipThirdWeapon;
+        public InputAction @Shoot => m_Wrapper.m_GamePlay_Shoot;
+        public InputAction @Reload => m_Wrapper.m_GamePlay_Reload;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -202,6 +317,21 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @EquipFirstWeapon.started += instance.OnEquipFirstWeapon;
+            @EquipFirstWeapon.performed += instance.OnEquipFirstWeapon;
+            @EquipFirstWeapon.canceled += instance.OnEquipFirstWeapon;
+            @EquipSecondWeapon.started += instance.OnEquipSecondWeapon;
+            @EquipSecondWeapon.performed += instance.OnEquipSecondWeapon;
+            @EquipSecondWeapon.canceled += instance.OnEquipSecondWeapon;
+            @EquipThirdWeapon.started += instance.OnEquipThirdWeapon;
+            @EquipThirdWeapon.performed += instance.OnEquipThirdWeapon;
+            @EquipThirdWeapon.canceled += instance.OnEquipThirdWeapon;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -209,6 +339,21 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @EquipFirstWeapon.started -= instance.OnEquipFirstWeapon;
+            @EquipFirstWeapon.performed -= instance.OnEquipFirstWeapon;
+            @EquipFirstWeapon.canceled -= instance.OnEquipFirstWeapon;
+            @EquipSecondWeapon.started -= instance.OnEquipSecondWeapon;
+            @EquipSecondWeapon.performed -= instance.OnEquipSecondWeapon;
+            @EquipSecondWeapon.canceled -= instance.OnEquipSecondWeapon;
+            @EquipThirdWeapon.started -= instance.OnEquipThirdWeapon;
+            @EquipThirdWeapon.performed -= instance.OnEquipThirdWeapon;
+            @EquipThirdWeapon.canceled -= instance.OnEquipThirdWeapon;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -238,5 +383,10 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
     public interface IGamePlayActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnEquipFirstWeapon(InputAction.CallbackContext context);
+        void OnEquipSecondWeapon(InputAction.CallbackContext context);
+        void OnEquipThirdWeapon(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

@@ -1,29 +1,27 @@
-﻿using _GunGameBattle.Source.Items.Configs;
+﻿using System;
+using _GunGameBattle.Source.Items.Configs;
 using UnityEngine;
 
 namespace _GunGameBattle.Source.Items
 {
-    public class Item : MonoBehaviour, IPickUpAble
+    public abstract class Item : MonoBehaviour, IPickUpAble
     {
-        public int Id;
-        
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        public event Action<ItemConfig> OnInitialized;
+        public int Id { get; private set; }
 
         public void Initialize(ItemConfig config)
         {
-            _spriteRenderer.sprite = config.Sprite;
             Id = config.Id;
+            InitializeSpecific(config);
+            OnInitialized?.Invoke(config);
         }
 
         public Item PickUp()
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             return this;
         }
-    }
 
-    public interface IPickUpAble
-    {
-        public Item PickUp();
+        protected abstract void InitializeSpecific(ItemConfig config);
     }
 }

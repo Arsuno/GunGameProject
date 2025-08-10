@@ -2,7 +2,6 @@
 {
     public interface IItemConfigProvider
     {
-        public ItemConfig GetItemConfigById(int id);
         public ItemConfig GetRandomItemConfig();
     }
 }
