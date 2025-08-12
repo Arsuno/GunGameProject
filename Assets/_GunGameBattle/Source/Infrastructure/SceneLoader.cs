@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace _GunGameBattle.Source.Infrastructure
 {
@@ -9,6 +10,7 @@ namespace _GunGameBattle.Source.Infrastructure
     {
         private readonly ICoroutineRunner _coroutineRunner;
 
+        [Inject]
         public SceneLoader(ICoroutineRunner coroutineRunner) =>
             _coroutineRunner = coroutineRunner;
 

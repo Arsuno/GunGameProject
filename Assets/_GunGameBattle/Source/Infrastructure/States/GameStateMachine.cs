@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _GunGameBattle.Source.Infrastructure.Data;
+using Zenject;
 
 namespace _GunGameBattle.Source.Infrastructure.States
 {
@@ -8,11 +10,12 @@ namespace _GunGameBattle.Source.Infrastructure.States
         private Dictionary<Type, IState> _states;
         private IState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader)
+        [Inject]
+        public GameStateMachine(SceneLoader sceneLoader, SaveLoadSystem saveLoadSystem)
         {
             _states = new Dictionary<Type, IState>
             {
-                [typeof(LoadProgressState)] = new LoadProgressState(this),
+                [typeof(LoadProgressState)] = new LoadProgressState(this, saveLoadSystem),
                 [typeof(LoadLevelState)] = new LoadLevelState(sceneLoader, this),
                 [typeof(GameLoopState)] = new GameLoopState(),
             };

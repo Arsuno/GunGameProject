@@ -12,30 +12,25 @@ namespace _GunGameBattle.Source.Player.PickUp
         private PlayerInventory _playerInventory;
 
         [Inject]
-        public void Initialize(PlayerInventory playerInventory)
-        {
+        public void Initialize(PlayerInventory playerInventory) => 
             _playerInventory = playerInventory;
-        }
 
-        private void Update()
+        public void TryPickup()
         {
-            if (Input.GetKeyDown(KeyCode.E) && _playerInventory.HasEmptySlot())
-                TryPickup();
-        }
-
-        private void TryPickup()
-        {
-            if (_pickupZone.Items.Count > 0)
+            if (_playerInventory.HasEmptySlot())
             {
-                IPickUpAble nearestItem = _pickupZone.GetNearestItem();
+                if (_pickupZone.Items.Count > 0)
+                {
+                    IPickUpAble nearestItem = _pickupZone.GetNearestItem();
 
-                if (nearestItem == null)
-                    return;
+                    if (nearestItem == null)
+                        return;
 
-                Debug.Log("Item picked up");
-                var item = nearestItem.PickUp();
-                _playerInventory.TryAddItem(item);
-            }
+                    Debug.Log("Item picked up");
+                    var item = nearestItem.PickUp();
+                    _playerInventory.TryAddItem(item);
+                }
+            }   
         }
     }
 }

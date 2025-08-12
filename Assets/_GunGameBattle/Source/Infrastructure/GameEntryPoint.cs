@@ -1,17 +1,18 @@
 ﻿using _GunGameBattle.Source.Infrastructure.States;
 using UnityEngine;
+using Zenject;
 
 namespace _GunGameBattle.Source.Infrastructure
 {
-    public class GameEntryPoint : MonoBehaviour, ICoroutineRunner
+    public class GameEntryPoint : MonoBehaviour
     {
         private GameStateMachine _stateMachine;
 
-        private void Awake()
-        {
-            _stateMachine = new GameStateMachine(new SceneLoader(this));
-            _stateMachine.Enter<LoadLevelState>();
-        }
-    }
+        [Inject]
+        private void Initialize(GameStateMachine gameStateMachine) => 
+            _stateMachine = gameStateMachine;
 
+        private void Start() => 
+            _stateMachine.Enter<LoadProgressState>();
+    }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using _GunGameBattle.Source.Infrastructure.Factories;
+﻿using _GunGameBattle.Source.Items;
 using _GunGameBattle.Source.Items.Configs;
 using UnityEngine;
 using Zenject;
@@ -18,15 +17,20 @@ namespace _GunGameBattle.Source.LevelObjects
         {
             _itemConfigProvider = itemConfigProvider;
             _itemFactory = itemFactory;
+            
+            _health.Destroyed += OnCrateDestroyed;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space)) 
-                Destroy(this.gameObject);
+            if (Input.GetKeyDown(KeyCode.C))
+                _health.TakeDamage(100);
         }
 
-        private void OnDestroy() => 
+        private void OnDestroy() =>
+            _health.Destroyed -= OnCrateDestroyed;
+
+        private void OnCrateDestroyed() => 
             SpawnRandomItem();
 
         private void SpawnRandomItem()

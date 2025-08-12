@@ -1,5 +1,5 @@
 ﻿using System;
-using _GunGameBattle.Source.Player.Shooting;
+using _GunGameBattle.Source.Player.Attack.Bullet;
 
 namespace _GunGameBattle.Source.Items.Configs
 {

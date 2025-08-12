@@ -80,6 +80,15 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""26479b63-47c7-442f-8c00-d04f2847001e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5524ca45-760e-4dbc-b57b-b21029059558"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +243,7 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
         m_GamePlay_EquipThirdWeapon = m_GamePlay.FindAction("EquipThirdWeapon", throwIfNotFound: true);
         m_GamePlay_Shoot = m_GamePlay.FindAction("Shoot", throwIfNotFound: true);
         m_GamePlay_Reload = m_GamePlay.FindAction("Reload", throwIfNotFound: true);
+        m_GamePlay_PickUp = m_GamePlay.FindAction("PickUp", throwIfNotFound: true);
     }
 
     ~@PlayerInputControls()
@@ -295,6 +316,7 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_EquipThirdWeapon;
     private readonly InputAction m_GamePlay_Shoot;
     private readonly InputAction m_GamePlay_Reload;
+    private readonly InputAction m_GamePlay_PickUp;
     public struct GamePlayActions
     {
         private @PlayerInputControls m_Wrapper;
@@ -305,6 +327,7 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
         public InputAction @EquipThirdWeapon => m_Wrapper.m_GamePlay_EquipThirdWeapon;
         public InputAction @Shoot => m_Wrapper.m_GamePlay_Shoot;
         public InputAction @Reload => m_Wrapper.m_GamePlay_Reload;
+        public InputAction @PickUp => m_Wrapper.m_GamePlay_PickUp;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +355,9 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @PickUp.started += instance.OnPickUp;
+            @PickUp.performed += instance.OnPickUp;
+            @PickUp.canceled += instance.OnPickUp;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -354,6 +380,9 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @PickUp.started -= instance.OnPickUp;
+            @PickUp.performed -= instance.OnPickUp;
+            @PickUp.canceled -= instance.OnPickUp;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -388,5 +417,6 @@ public partial class @PlayerInputControls: IInputActionCollection2, IDisposable
         void OnEquipThirdWeapon(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnPickUp(InputAction.CallbackContext context);
     }
 }

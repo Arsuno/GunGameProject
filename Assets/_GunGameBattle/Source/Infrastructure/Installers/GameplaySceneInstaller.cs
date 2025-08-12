@@ -1,7 +1,11 @@
-﻿using _GunGameBattle.Source.Infrastructure.Factories;
+﻿using _GunGameBattle.Source.Enemy;
 using _GunGameBattle.Source.Items;
 using _GunGameBattle.Source.Items.Configs;
+using _GunGameBattle.Source.Player.Attack.Bullet;
+using _GunGameBattle.Source.Player.Attack.Strategies;
+using _GunGameBattle.Source.Player.Equipment;
 using _GunGameBattle.Source.Player.Inventory;
+using _GunGameBattle.Source.Player.Services;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +13,7 @@ namespace _GunGameBattle.Source.Infrastructure.Installers
 {
     public class GameplaySceneInstaller : MonoInstaller
     {
+        [SerializeField] private EnemySpawner _enemySpawner; 
         [SerializeField] private GameDataConfig _gameDataConfig; //Изучить мб стоит сделать через Resources или Addressables
         
         private ItemFactory _itemFactory;
@@ -18,26 +23,36 @@ namespace _GunGameBattle.Source.Infrastructure.Installers
 
         public override void InstallBindings()
         {
-            CreateEntities();
-            
-            //ITEMS
-            Container.Bind<ItemFactory>().FromInstance(_itemFactory).AsSingle();
-            Container.Bind<ItemsData>().FromInstance(_gameDataConfig.Items).AsSingle();
-            Container.Bind<IItemConfigProvider>().To<RandomItemConfigProvider>().AsSingle();
-            
-            //PLAYER DEPENDENCIES
-            Container.Bind<PlayerInventory>().FromInstance(_playerInventory).AsSingle();
-            Container.Bind<PlayerEquipment>().FromInstance(_playerEquipment).AsSingle();
-            Container.Bind<PlayerInputControls>().FromInstance(_playerInputControls).AsSingle();
-        }
+            //CONFIGS
+            Container.BindInstance(_gameDataConfig.Items).AsSingle();
 
-        private void CreateEntities()
-        {   
-            _itemFactory = new ItemFactory();
-            _playerInventory = new PlayerInventory(2);
-            _playerEquipment = new PlayerEquipment();
-            _playerInputControls = new PlayerInputControls();
-            _playerInputControls.Enable();
+            //ITEMS
+            Container.Bind<IItemConfigProvider>().To<RandomItemConfigProvider>().AsSingle();
+            Container.Bind<ItemFactory>().AsSingle();
+
+            //PLAYER
+            Container.Bind<PlayerInventory>().AsSingle().WithArguments(2);
+            Container.Bind<PlayerEquipment>().AsSingle();
+            Container.Bind<PlayerEquipmentController>().AsSingle();
+            Container.Bind<PlayerInputControls>()
+                .FromMethod(_ =>
+                {
+                    var c = new PlayerInputControls();
+                    c.Enable();
+                    return c;
+                })
+                .AsSingle()
+                .NonLazy();
+
+            //SERVICES
+            Container.Bind<IBulletPoolService>().To<BulletPoolService>().AsSingle();
+            Container.Bind<IAttackStrategyFactory>().To<AttackStrategyFactory>().AsSingle();
+            Container.Bind<ICoroutineRunner>().FromComponentInHierarchy().AsSingle();
+
+            //PLAYER PROGRESS
+            
+            //ENEMY
+            Container.Bind<EnemySpawner>().FromInstance(_enemySpawner).AsSingle();
         }
     }
 }

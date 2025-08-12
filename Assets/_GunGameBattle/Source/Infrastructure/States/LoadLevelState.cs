@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace _GunGameBattle.Source.Infrastructure.States
 {
-    public class LoadLevelState : IState //Грузим уровень
+    public class LoadLevelState : IState
     {
         public const string GameplaySceneName = "Game";
         
@@ -15,19 +13,12 @@ namespace _GunGameBattle.Source.Infrastructure.States
             _stateMachine = stateMachine;
         }
         
-        public void Enter()
-        {
+        public void Enter() => 
             _sceneLoader.Load("Game", OnLoaded);
-        }
-        
-        private void OnLoaded()
-        {
-            _stateMachine.Enter<GameLoopState>();
-        }
 
-        public void Exit()
-        {
-            
-        }
+        private void OnLoaded() => 
+            _stateMachine.Enter<GameLoopState>();
+
+        public void Exit() { }
     }
 }
